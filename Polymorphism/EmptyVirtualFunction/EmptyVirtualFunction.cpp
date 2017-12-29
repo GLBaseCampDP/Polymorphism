@@ -13,7 +13,6 @@ struct A {
 };
 struct B :public A {};
 struct D :public A {
-public:
 	void show()	SHOW("D");
 };
 struct C : public B {
@@ -22,6 +21,8 @@ struct C : public B {
 // Шлюз на клас A
 void Show(A* a) { a->show(); }
 //виклик віртуально функції ::show()
-main() { Show(new C); }
+void main() { Show(new C); }
+
+
 
 
