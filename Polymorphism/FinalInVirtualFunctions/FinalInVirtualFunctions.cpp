@@ -15,6 +15,11 @@ struct B : A
 	void f() final override {
 		std::cout << "B" << '\n';
 	}
+
+	void B::f1()
+	{
+	}
+	
 };
 struct C : B
 {
