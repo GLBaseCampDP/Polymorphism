@@ -30,11 +30,11 @@ struct B : A {
 
 
 #pragma pack(pop)
-void memory (A* p, int cnt) {
-  int *p1 = (int*)p;
-  cout << "\nstart adress (A): " << (long long)p << "\n";
-  for (int i = 0; i < cnt; ++i)
-	 cout << "    ofsset - " << i << " sizeof (int) - " << *(p1 + i) << "\n";
+void memory(A* p, int cnt, char* m) {
+	int *p1 = (int*)p;
+	cout << "\nstart adress " << m << ": " << (long long)p << "\n";
+	for (int i = 0; i < cnt; ++i)
+		cout << "    ofsset - " << i << " sizeof (int) - " << *(p1 + i) << "\n";
 }
 
 void vptr_vtab(A* p) {
@@ -43,23 +43,30 @@ void vptr_vtab(A* p) {
 	cout << " #vtab - " << *((long long*)(*p2)) << "\n\n";
 }
 
+typedef void(*PP)(A *const);
 void main() {
 	SIZES;
 
 	A* p = new A(1);
 	p->f();  	p->f1();
-	memory(p, 3);// аналіз памяті з кроком sizeof(int)  
+	memory(p, 3, "A");// аналіз памяті з кроком sizeof(int)  
 	vptr_vtab(p); // визначення vptr  
 	
 	
 	p = new B(2,3);
 	p->f(); p->f1();
-	memory(p, 4);// аналіз памяті з кроком sizeof(int)
+	memory(p, 4, "B");// аналіз памяті з кроком sizeof(int)
 	vptr_vtab(p); // визначення vptr  
+
+				  /*	cout << "YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS";
+	void ** p2 = (void**) *((long long*)(p));
+	// vptr
+	((PP)(p2[0]))(p);
+	// адреса функції вибирається як vptr[vtab]
+	cout << "YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS";
+
+
 	
-
-
-	/*	
 	void(A::*fA)() = &A::f;
 	void(B::*fB)() = &B::f;
 	void(A::*f1A)() = &A::f1;
