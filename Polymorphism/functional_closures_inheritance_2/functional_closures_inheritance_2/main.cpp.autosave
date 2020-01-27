@@ -1,0 +1,17 @@
+#include <windows>
+struct GetContext {
+  HWND hw;
+  HDC hdc;
+  GetContext(HWND hwn) {hw = hwn; hdc = GetDC(hwn);}
+  ~GetContext() { ReleaseDC(hwindow, hdc); }
+};
+struct Text : GetContext {
+ Text(HWND hwnd, int x, int y, char* str) :
+  GetContext(hwnd){
+   TexOut(hdc, x, y, (LPSTR)(str), strlen(str);
+}
+};
+int main() {
+ HWND hwnd;
+ Text message(hwnd, 3, 5, "Error");
+}
